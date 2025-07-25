@@ -15,19 +15,57 @@ A nossa proposta de solução será um modelo preditivo que consegue nos dar a p
 
 A entrega final, será um dashboard interativo em que o cliente poderá ver a loja, o seu detalhamento de informações e, também a previsão do total de vendas dos próximos 6 dias. Esse dashboard poderá ser acessado de qualquer local, pois o mesmo estará hospedado em nuvem.
 
-## 2.3 Dicionário de Dados
+## 2.3 Base de Dados Principal
 
-|Store| Identificador único para cada loja|
-|Sales| Faturamento de qualquer dia específico|
-|Customers| O número de clientes em um dado dia|
-|Open| Um indicador se a loja estava aberta: 0 = fechada, 1 = aberta|
-|StateHoliday| Indica um feriado estadual. a = feriado público, b = feriado de Páscoa, c = Natal, 0 = Nenhum.|
-|SchoolHoliday| Indica se a (Loja, Data) foi afetada pelo fechamento das escolas públicas|
-|StoreType| Diferencia entre 4 modelos de lojas diferentes: a, b, c, d.|
-|Assortment| Descreve um nível de sortimento: a = básico, b = extra, c = estendido.|
-|CompetitionDistance|Distância em metros até a loja concorrente mais próxima.|
-|CompetitionOpenSinceMonth/Year| Dá o ano aproximado e o mês em que a loja concorrente mais próxima foi aberta.
-|Promo|Indica se uma loja está realizando uma promoção nesse dia|
-|Promo2| Promo2 é uma promoção contínua e consecutiva para algumas lojas: 0 = a loja não está participando, 1 = a loja está participando.|
-|Promo2SinceYear/Month|Descreve o ano e a semana do calendário em que a loja começou a participar da Promo2|
-|PromoInterval| Descreve os intervalos consecutivos em que a Promo2 é iniciada, nomeando os meses em que a promoção é reiniciada. Por exemplo, "Fev, Mai, Ago, Nov" significa que cada rodada começa em fevereiro, maio, agosto e novembro de qualquer ano para aquela loja.|
+Logo abaixo, tem-se o dicionário de dados das variávies que foram utilizadas.
+
+| Coluna                  | Descrição                                                                                                  |
+|-------------------------|------------------------------------------------------------------------------------------------------------|
+| **Store**               | Identificador único para cada loja                                                                         |
+| **Sales**               | Faturamento de qualquer dia específico (isso é o que você está prevendo)                                   |
+| **Customers**           | Número de clientes em um dado dia                                                                          |
+| **Open**                | Indicador se a loja estava aberta: 0 = fechada, 1 = aberta                                                 |
+| **StateHoliday**        | Indica um feriado estadual: a = feriado público, b = Páscoa, c = Natal, 0 = Nenhum                         |
+| **SchoolHoliday**       | Indica se a (Loja, Data) foi afetada pelo fechamento das escolas públicas                                  |
+| **StoreType**           | Modelos de lojas: a, b, c, d                                                                               |
+| **Assortment**          | Nível de sortimento: a = básico, b = extra, c = estendido                                                  |
+| **CompetitionDistance** | Distância até a loja concorrente mais próxima                                                              |
+| **CompetitionOpenSinceMonth/Year** | Ano e mês aproximados em que a loja concorrente mais próxima foi aberta                         |
+| **Promo**               | Indica se uma loja está realizando uma promoção nesse dia                                                  |
+| **Promo2**              | Promoção contínua: 0 = a loja não está participando, 1 = a loja está participando                          |
+| **Promo2SinceYear/Month** | Ano e semana em que a loja começou a participar da Promo2                                                |
+| **PromoInterval**       | Meses em que a Promo2 é iniciada: "Fev, Mai, Ago, Nov"                                                     |
+
+
+# Observação
+Logo abaixo, você encontrará uma descrição de como foi realizado o desenvolvimento do projeto, desde a fase de análise exploratória até a modelagem e treinamento do modelo e finalização do resultado em um dashboard. Importante ressaltar, que, inicialmente, tentamos realizar a previsão de vendas das próximas 6 semanas. Para isso, realizamos uma engenharia de atributos e modelagem, que obtivéssemo um agrupamento semanal dos dados. Entretanto, com isso, perdemos a granularidade e o detalhamento dos dados, impactanto negativamente a performance dos modelos criados. 
+
+Mudando a estratégia, decidi realizar a previsão do total de vendas dos próximos 6 dias, mantendo a granularidade dos dados no nível de dia. Isso faz mais sentido, pois, entendido a realidade de negócio em que se está inserido o problema que, no caso, é o varejo, o comportamento diário é extremamente importante dada como são as variações desse modelo de negócio, impactanto no aprendizado de máquina no entendimento dos detalhes de variações e complexidades.
+
+Para esse fim, foram realizados 5 ciclos de tentativas. Portanto, logo abaixo, mencionarei o resumo de toda a estratégia e planejamento utilizada no último ciclo, no caso, ciclo 5. 
+
+# 3.0 Análise Exploratória dos Dados
+
+Durante o processo de análise exploratória, realizamos uma análise geral entre nossas variáveis independentes e a variável alvo. Isso permitiu compreender melhor nosso dataset e validar as informações disponíveis. As conclusões aqui, são as mesmas da análise estatística que realizamos anteriormente. Eles servirão de base para a tomada de decisão na modelagem de dados preditiva.
+
+**Relatório**
+
+- **Day of Week**: Durante os primeiros dias da semana, o faturamento é maior. Com a chegada do fim de semana, o volume diminui devido à menor movimentação de pessoas nas drogarias durante sextas, sábados e domingos.
+- **Customers**: O aumento do número de clientes nas drogarias resulta em maior faturamento, pois mais pessoas estão realizando compras.
+- **CompetitionDistance**: Analisando o gráfico, percebemos uma leve tendência de queda na regressão. Lojas com concorrentes mais próximos tendem a realizar mais promoções, aumentando o volume de vendas. Com um concorrente mais distante, as promoções não são tão frequentes, impactando menos o volume de vendas.
+- **Open**: Lojas abertas possuem um maior volume de vendas.
+- **Promo**: Lojas em promoção tendem a ter um maior volume de vendas, já que esse é o objetivo da promoção.
+- **SchoolHoliday**: Lojas afetadas por feriados escolares têm um faturamento maior, pois estão localizadas próximas a escolas, resultando em maior movimentação de segunda a sábado.
+- **Promo2**: Promoções têm efeito apenas por um período limitado. Após os clientes adquirirem os produtos, eles não compram novamente tão rapidamente. Promoções prolongadas perdem força.
+- **StateHoliday**: O faturamento é maior em datas que não são feriados.
+- **Assortment**: Drogarias com uma variedade básica ou estendida faturam menos que drogarias com uma variedade intermediária. Variedade básica não atende a todas as necessidades, enquanto variedade excessiva inclui produtos de baixa rotatividade, impactando o volume de vendas.
+- **StoreType**: Todas as lojas faturam, mas as do tipo b possuem maior faturamento.
+- **CompetitionOpenSinceYearMonth**: Não há diferença significativa entre o tempo de abertura de um competidor e as vendas, indicando que as lojas mantêm suas vendas de forma constante.
+
+## 4.0 Engenharia de Atributos
+
+De modo a obter uma modelagem de dados 
+
+['Store', 'StoreType', 'Assortment', 'CompetitionDistance', 'YearsCompetition', 'Sales', 'Customers', 'Promo','Promo2', 'PublicHoliday', 'SalesLastDay',
+                     'MeanSalesLastSevenDays', 'TotalSalesLastSevenDays', 'TotalPromoLastSevenDays', 'TotalPromo2LastSevenDays', 'TotalSchoolHolidayLastSevenDays', 'TotalPublicHolidaysLastSevenDays',
+                     'TotalSalesNextSixDays']
