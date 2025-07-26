@@ -77,3 +77,20 @@ Para atingir nosso objetivo, foi feita uma modelagem de dados para atingir esse 
 |  TotalSchoolHolidayLastSevenDay  | Quantidade de feriados escolares nos últimos 7 dias      |
 | TotalPublicHolidaysLastSevenDays | Quantidade de feriados públicos dos últimos 7 dias       |
 |       TotalSalesNextSixDays      | Nossa variável alvo: Total de vendas dos próximos 6 dias |
+
+
+## 5.0 Separação dos Dados para Aprendizam de Máquina e Pré-Processamento dos Dados
+
+Nessa etapa separamos os dados entre treino, validação e teste para avaliar o modelo e realizamos a etapa do Pré-Processamento. De modo a facilitar o script de produção, utilizamos pipelines.
+
+## 6.0 Modelos Utilizados
+
+Ao todo, foram testados 10 modelos para avaliar qual teria melhor performance e aderência. As métricas utilizadas foram: Média Absoluta do Erro - MAE, Média Absoluta de Percentual do Erro - MAPE e Erro Médio da Raiz Quadrática - RMSE. Logo Abaixo temos:
+
+### Capacidade de Aprendizado
+
+|Métricas|Regressão Linear|  Ridge  |  Lasso  |   Tree  | ExtraTree | LinearSRV | ExtraTrees | Gradient Boosting | Random Forest | XGBoost |
+|--------|----------------|---------|---------|---------|-----------|-----------|------------|-------------------|---------------|---------|
+|   MAE	 |     4855.23	  | 4855.23	| 4855.06 |	5822.31 |  6418.07	|  4824.58	|  5667.48	 |      4184.25	     |    5597.25	 | 3945.42 |
+|  MAPE	 |      11.94	  |  11.94	|  11.94  |	 14.50	|   16.37	|   11.51	|   14.38	 |       10.20	     |     13.96	 |   9.63  |
+|  RMSE	 |     6669.82	  | 6669.82	| 6669.83 |	5822.31	|  8400.15	|  6802.10	|  7512.42	 |      5745.90	     |    7532.91	 | 5392.12 |
