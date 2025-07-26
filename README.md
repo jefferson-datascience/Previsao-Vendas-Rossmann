@@ -64,8 +64,16 @@ Durante o processo de análise exploratória, realizamos uma análise geral entr
 
 ## 4.0 Engenharia de Atributos
 
-De modo a obter uma modelagem de dados 
+Para atingir nosso objetivo, foi feita uma modelagem de dados para atingir esse objetivo. Para isso criamos as seguintes variáveis:
 
-['Store', 'StoreType', 'Assortment', 'CompetitionDistance', 'YearsCompetition', 'Sales', 'Customers', 'Promo','Promo2', 'PublicHoliday', 'SalesLastDay',
-                     'MeanSalesLastSevenDays', 'TotalSalesLastSevenDays', 'TotalPromoLastSevenDays', 'TotalPromo2LastSevenDays', 'TotalSchoolHolidayLastSevenDays', 'TotalPublicHolidaysLastSevenDays',
-                     'TotalSalesNextSixDays']
+|              Variável            | Descrição                                                |
+|----------------------------------|----------------------------------------------------------|
+|           PublicHoliday          | Feriado público no dia de hoje                           |
+|            SalesLastDay          | Vendas do último dia                                     |
+|       MeanSalesLastSevenDays     | Média das vendas dos últimos 7 dias                      | 
+|      TotalSalesLastSevenDays     | Total de Vendas dos últimos 7 dias                       | 
+|      TotalPromoLastSevenDays     | Quantidade de promoções ativadas nos últimos 7 dias      |
+|     TotalPromo2LastSevenDays     | Quantidade de promoções 2 ativadas nos últimos 7 dias    |
+|  TotalSchoolHolidayLastSevenDay  | Quantidade de feriados escolares nos últimos 7 dias      |
+| TotalPublicHolidaysLastSevenDays | Quantidade de feriados públicos dos últimos 7 dias       |
+|       TotalSalesNextSixDays      | Nossa variável alvo: Total de vendas dos próximos 6 dias |
