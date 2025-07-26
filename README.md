@@ -115,7 +115,7 @@ Em validação cruzada, o modelo se apresentou estável. Realizamos essa valida�
 
 ## 8.0 Hiperparametrização
 
-Utilizando a técnica do RandomizedSearchCV, com o objetivo de redução da métrica MAE, conseguimos uma melhora significativa de MAPE para 9.0.
+Utilizando a técnica do RandomizedSearchCV, com o objetivo de redução da métrica MAPE, conseguimos uma melhora significativa de MAPE para 9.0.
 
 ## 9.0 Treinamento e Validação Final
 
