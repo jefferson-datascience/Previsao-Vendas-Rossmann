@@ -87,10 +87,40 @@ Nessa etapa separamos os dados entre treino, validação e teste para avaliar o 
 
 Ao todo, foram testados 10 modelos para avaliar qual teria melhor performance e aderência. As métricas utilizadas foram: Média Absoluta do Erro - MAE, Média Absoluta de Percentual do Erro - MAPE e Erro Médio da Raiz Quadrática - RMSE. Logo Abaixo temos:
 
-### Capacidade de Aprendizado
+#### Capacidade de Aprendizado
 
 |Métricas|Regressão Linear|  Ridge  |  Lasso  |   Tree  | ExtraTree | LinearSRV | ExtraTrees | Gradient Boosting | Random Forest | XGBoost |
 |--------|----------------|---------|---------|---------|-----------|-----------|------------|-------------------|---------------|---------|
 |   MAE	 |     4855.23	  | 4855.23	| 4855.06 |	5822.31 |  6418.07	|  4824.58	|  5667.48	 |      4184.25	     |    5597.25	 | 3945.42 |
 |  MAPE	 |      11.94	  |  11.94	|  11.94  |	 14.50	|   16.37	|   11.51	|   14.38	 |       10.20	     |     13.96	 |   9.63  |
 |  RMSE	 |     6669.82	  | 6669.82	| 6669.83 |	5822.31	|  8400.15	|  6802.10	|  7512.42	 |      5745.90	     |    7532.91	 | 5392.12 |
+
+#### Capacidade de Generalização
+
+|Métricas|Regressão Linear|  Ridge  |  Lasso  |   Tree  | ExtraTree | LinearSRV | ExtraTrees | Gradient Boosting | Random Forest | XGBoost |
+|--------|----------------|---------|---------|---------|-----------|-----------|------------|-------------------|---------------|---------|
+|   MAE	 |    4856.71	  | 4856.71	| 4856.55 |	7762.46	|  6394.32	|  4827.67	|  5652.12	 |       4196.03	 |     5581.37	 | 4010.41 |
+|  MAPE  |     11.97	  |  11.97	|  11.97  |  14.48	|   16.35	|   11.55	|   14.37	 |        10.24	     |      13.94	 |  9.78   |
+|  RMSE	 |    6688.36	  | 6688.36	| 6688.37 |	5802.89	|  8366.53	|  6815.55	|  7503.71	 |       5781.90	 |     7517.66	 | 5516.65 |
+
+Podemos ver que o modelo que melhor performou foi o XGBoost, logo, ele é nosso modelo campeão.
+
+## 7.0 Validação Cruzada
+
+Em validação cruzada, o modelo se apresentou estável. Realizamos essa validação com as três métricas principais. Segue os resultados:
+
+* Desvio Padrão MAPE: 0.04  - Média MAPE: 9.78;
+* Desvio Padrão MAE: 17.21  - Média MAE: 4018.16
+* Desvio Padrão RMSE: 26.99 - Média RMSE: 5522.66
+
+## 8.0 Hiperparametrização
+
+Utilizando a técnica do RandomizedSearchCV, com o objetivo de redução da métrica MAE, conseguimos uma melhora significativa de MAPE para 9.0.
+
+## 9.0 Treinamento e Validação Final
+
+Na fase final, juntamos os dados de treino e validação, retreinamos o modelo e, avaliamos ele com os dados de teste, isto é, dados que ainda não tinham sido vistos. Com isso, conseguimos as seguintes performances:
+
+* MAE: 3625.82
+* MAPE: 8.55
+* RMSE: 5322.55
