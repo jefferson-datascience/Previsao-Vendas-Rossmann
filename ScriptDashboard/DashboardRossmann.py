@@ -119,26 +119,37 @@ elif pagina == "Análise de Faturamento":
     )
 
     st.markdown("- **Day of Week**: Os primeiros dias da semana apresentam maior faturamento. Sextas, sábados e domingos têm queda nas vendas.")
+    st.image('../Imagens/DayOfWeekVSSales.png')
+
     st.markdown("- **Customers**: Mais clientes resultam diretamente em maior faturamento.")
-    st.markdown(
-        "- **CompetitionDistance**: Há uma leve tendência de queda no faturamento conforme a distância do concorrente diminui. Lojas com concorrentes próximos tendem a promover mais, aumentando as vendas."
-    )
-    st.markdown("- **Open**: Lojas abertas naturalmente registram maior volume de vendas.")
+    st.image('../Imagens/DayOfWeekVSSales.png')
+
+    st.markdown("- **CompetitionDistance**: Há uma leve tendência de queda no faturamento conforme a distância do concorrente diminui. Lojas com concorrentes " \
+                "próximos tendem a promover mais, aumentando as vendas.")
+    st.image('../Imagens/CompetitonDistanceVSSales.png')
+
     st.markdown("- **Promo**: Promoções aumentam significativamente o volume de vendas.")
-    st.markdown(
-        "- **SchoolHoliday**: Lojas próximas a escolas tendem a ter maior faturamento durante os feriados escolares, devido à maior movimentação de segunda a sábado."
-    )
-    st.markdown(
-        "- **Promo2**: Promoções contínuas perdem eficácia ao longo do tempo, pois os clientes não repetem a compra com tanta frequência."
-    )
+    st.image('../Imagens/PromoVSSales.png')
+
+    st.markdown("- **SchoolHoliday**: Lojas próximas a escolas tendem a ter maior faturamento durante os feriados escolares, devido à maior movimentação de segunda a sábado.")
+    st.image('../Imagens/SchoolHolidayVSSales.png')
+
+    st.markdown("- **Promo2**: Promoções contínuas perdem eficácia ao longo do tempo, pois os clientes não repetem a compra com tanta frequência.")
+    st.image('../Imagens/SchoolHolidayVSSales.png')
+
     st.markdown("- **StateHoliday**: O faturamento tende a ser menor em dias de feriado.")
-    st.markdown(
-        "- **Assortment**: Lojas com sortimento intermediário performam melhor. Sortimentos básicos não atendem bem à demanda, e sortimentos excessivos incluem produtos de baixa rotatividade."
-    )
+    st.image('../Imagens/StateHolidayVSSales.png')
+
+    st.markdown("- **Assortment**: Lojas com sortimento intermediário performam melhor. Sortimentos básicos não atendem bem à demanda, e sortimentos excessivos" \
+                " incluem produtos de baixa rotatividade.")
+    st.image('../Imagens/AssortmentVSSales.png')
+
     st.markdown("- **StoreType**: Lojas do tipo 'b' apresentam maior faturamento médio.")
-    st.markdown(
-        "- **CompetitionOpenSinceYearMonth**: O tempo de abertura do concorrente mais próximo não apresentou impacto significativo nas vendas."
-    )
+    st.image('../Imagens/StoreTypeVSSales.png')
+
+    st.markdown("- **CompetitionOpenSinceYear/Month**: O tempo de abertura do concorrente mais próximo não apresentou impacto significativo nas vendas.")
+    st.image('../Imagens/CompetitionOpenSinceYearVSSales.png')
+    st.image('../Imagens/CompetitionOpenSinceMonthVSSales.png')
 
     st.header("Análise de Correlação")
 
@@ -174,14 +185,28 @@ elif pagina == "Análise de Faturamento":
 
 elif pagina == "Monitoramento de Faturamento":
 
-    df1 = df1.sort_values(by=['Date'], ascending=True)
+    # ======================= Construção de Filtro da Seção =======================
+    
+    # Montagem dos containers
+    filtro_monitoramento1, filtro_monitoramento2 = st.columns(2) 
+
+    # Construção dos filtros de loja e tipo de estoque
+    with filtro_monitoramento1:
+        selection_store = st.multiselect('Filtre o tipo de loja', ["a", "b", "c", "d"], default=["a", "b", "c", "d"])
+    
+    with filtro_monitoramento2:
+        selection_assortment = st.multiselect('Filtre o tipo de estoque da loja', ["a", "b", "c"], default=["a", "b", "c"])
+
+    # Construção do Dataset
+    df1 = df1[(df1['StoreType'].isin(selection_store)) & (df1['Assortment'].isin(selection_assortment))].sort_values(by=['Date'], ascending=True)
 
     # 2.0 Modelagem de Dados 
     assortment = df1_loja['Assortment'].value_counts().reset_index().rename(columns={'count':'Qtd.'})
     store_type = df1_loja['StoreType'].value_counts().reset_index().rename(columns={'count':'Qtd.'})
 
 
-    # ======================= 3.0 Apresentação dos Indicadores Chaves =======================
+    # ======================= Construção dos indicadores gerais de acompanhamento =======================
+    
     # Total de Faturamento
     total_sales = df1[df1['Date'] == df1['Date'].max()]['Sales'].sum()
 
@@ -197,21 +222,20 @@ elif pagina == "Monitoramento de Faturamento":
     card3.metric(label='Faturamento Médio por Cliente', value=fat_medio_client, border=True)
 
 
-
-    # ======================= 4.0 Acompanhamento da Série Histórica: Faturamento =======================
-
+    # ======================= Acompanhamento de Faturamento =======================
 
     # Título da Seção 
     st.title('**Faturamento das Lojas**')
 
-    container_fat = st.container(border=True)
+    # --------------------- GRÁFICO FATURAMENTO 30 DIAS ------------------
 
-    # GRÁFICO FATURAMENTO 30 DIAS
+    # Definição de Container para armazenar o gráfico
+    container_fat = st.container(border=True)
 
     # Cabeçalho do gráfico
     container_fat.markdown('**Faturamento - Últimos 30 Dias**')
             
-    # Data Limite
+    # Data Limite para obter os últimos 30 dias de faturamento
     data_limite = df1['Date'].max() - pd.Timedelta(days=30)
 
     # Construção datasets para os gráficos
@@ -220,10 +244,13 @@ elif pagina == "Monitoramento de Faturamento":
     # Gráfico
     container_fat.line_chart(data=serie_historica_vendas_diario, x='Date', y='Sales',  use_container_width=True)
 
+    # ------------------------- GRÁFICO DE FATURAMENTO MENSAL E ANUAL ------------------------------------
 
     # Containers para o faturamento mensal e anual
     graf1, graf2 = st.columns(2)
 
+
+    # ------------------ Faturamento visão mensal ----------------------
     with graf1:
 
         # Definição de Container
@@ -234,13 +261,15 @@ elif pagina == "Monitoramento de Faturamento":
         
         # Construção datasets para os gráficos
         serie_historica_vendas_mensal = df1[['Month', 'Sales']].groupby('Month').sum().reset_index()
+
         # Gráfico
         container_graf1.line_chart(data=serie_historica_vendas_mensal, 
-                    x='Month', 
-                    y='Sales',  
-                    use_container_width=True,
-                    )
+                                   x='Month', 
+                                   y='Sales',  
+                                   use_container_width=True)
 
+
+    # --------------------- Faturamento Visão Anual ------------------------
     with graf2:
 
         # Definição de Container 
@@ -258,16 +287,17 @@ elif pagina == "Monitoramento de Faturamento":
                     y='Sales',
                     use_container_width=True)   
 
+
+    # ------------------ Tabela para Acompanhamento das Faturamento das Lojas - TOP 10 ------------------
     st.subheader(f"Participação das Lojas no Faturamento de {df1['Year'].max()}")
 
-
-
+    # Definição de container para armazenar tabela
     container_graf3 = st.container(border=False)
 
     # Título da Tabela
-    container_graf3.markdown(f"**Top 10 Lojas**")
+    container_graf3.markdown(f"**Faturamento das Lojas - Top 10**")
         
-    # Modelagem
+    # Modelagem de Dados
     top_10_lojas = df1[df1['Year']==df1['Year'].max()].groupby(by='Store')['Sales'].sum().reset_index().sort_values(by=['Sales'], ascending=False).iloc[0:10, :].reset_index(drop=True)
     sales_year = df1[df1['Year']==df1['Year'].max()]['Sales'].sum()
     top_10_lojas['Perc. Part.'] = (top_10_lojas['Sales']/sales_year)*100
@@ -277,10 +307,10 @@ elif pagina == "Monitoramento de Faturamento":
             [{'selector': 'th, td', 'props': [('font-size', '12px')]}]
         )
 
-        # Exibir no Streamlit
+    # Exibir no Streamlit
     container_graf3.dataframe(styled_table, use_container_width=True)
 
-    # Definindo containers para o visão Mensal e anual
+    # Definição de Container para acompanhamento na paticipação do faturamento por tipo de loja e tipo de estoque
     graf4, graf5 = st.columns(2)
 
     with graf4:
@@ -317,41 +347,42 @@ elif pagina == "Monitoramento de Faturamento":
 
 
 
-    # ================================== 5.0 Acompanhamento das Movimentações de Clientes ==================================
+    # --------------------------- Acompanhamento das Movimentações de Clientes ---------------------------
 
     # Título da Seção
     st.title('**Movimentações de Clientes**')
 
+    container_mov_clientes = st.container(border=True)
+
     # Cabeçalho do gráfico
-    st.markdown('**Movimentações Clientes - Últimos 30 Dias**')
-        
-    # Data Limite
-    data_limite = df1['Date'].max() - pd.Timedelta(days=30)
+    container_mov_clientes.markdown('**Movimentações Clientes - Últimos 30 Dias**')
 
     # Construção datasets para os gráficos
     serie_historica_clientes_diario = df1[['Date', 'Customers']][df1['Date'] >= data_limite].groupby('Date').sum().reset_index()
         
     # Gráfico
-    st.line_chart(data=serie_historica_clientes_diario, 
+    container_mov_clientes.line_chart(data=serie_historica_clientes_diario, 
                 x='Date', 
                 y='Customers',  
                 use_container_width=True
                 )
 
-    # Definindo containers para o visão Mensal e anual
+    # Definindo containers para acompanhamento de clientes -  visão Mensal e Anual
     graf6, graf7 = st.columns(2)
 
     # Container de Clientes
     with graf6:
-        
+
+        container_graf6 = st.container(border=True) 
+
         # Cabeçalho do gráfico
-        st.markdown('**Movimentação de Clientes - Visão Mensal**')
+        container_graf6.markdown('**Movimentação de Clientes - Visão Mensal**')
         
         # Construção datasets para os gráficos
         serie_historica_clientes_mensal = df1[['Month', 'Customers']].groupby('Month').sum().reset_index()
         
         # Gráfico
-        st.line_chart(data=serie_historica_clientes_mensal, 
+        container_graf6.line_chart(data=serie_historica_clientes_mensal, 
                     x='Month', 
                     y='Customers',  
                     use_container_width=True
@@ -359,14 +390,17 @@ elif pagina == "Monitoramento de Faturamento":
         
     with graf7:
 
+        # Definição do Container
+        container_graf7 = st.container(border=True)
+
         # Cabeçalho do gráfico
-        st.markdown("**Movimentações de Clientes - Visão Anual**")
+        container_graf7.markdown("**Movimentações de Clientes - Visão Anual**")
 
         # Construção datasets para os gráficos
         serie_historia_clientes_anual = df1[['Year', 'Customers']].groupby('Year').sum().reset_index()
 
         # Gráfico
-        st.bar_chart(data=serie_historia_clientes_anual,
+        container_graf7.bar_chart(data=serie_historia_clientes_anual,
                     x='Year',
                     y='Customers',
                     use_container_width=True)   
