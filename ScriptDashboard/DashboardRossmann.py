@@ -8,8 +8,9 @@ import seaborn as sbn
 from datetime import datetime
 
 # 1.0 Carregamento dos Dados
-df1_loja = pd.read_csv('DadosLoja.csv', delimiter=',', low_memory=False)
-df1_faturamento = pd.read_csv('DadosFaturamento.csv', delimiter=',', low_memory=False)
+df1_loja = pd.read_csv('..\BaseDados\DadosLoja.csv', delimiter=',', low_memory=False)
+df1_faturamento = pd.read_csv('..\BaseDados\DadosTreino.csv', delimiter=',', low_memory=False)
+df1_predicoes = pd.read_parquet('..\DadosPredicao\BasePredita.parquet', engine='fastparquet')
 
 # Dados Finais
 df1 = df1_faturamento.merge(df1_loja, how='left', on='Store')
@@ -24,6 +25,43 @@ df1['Year'] = df1['Date'].dt.strftime('%Y')
 st.sidebar.image('..\Imagens\LogoRossmannSideBar.jpg')
 st.sidebar.write("Navegue pelo Projeto")
 pagina = st.sidebar.selectbox("",["Apresentação", "Análise de Faturamento", "Monitoramento de Faturamento", "Visão Gestores"])
+
+
+# Estilo customizado
+st.sidebar.markdown(
+    """
+    <style>
+    .sidebar-links a {
+        display: block;
+        padding: 8px 12px;
+        margin: 6px 0;
+        background-color: #f0f2f6;
+        border-radius: 8px;
+        color: #333333;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s ease-in-out;
+    }
+    .sidebar-links a:hover {
+        background-color: #dbe1ec;
+        color: #000000;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Conteúdo na barra lateral
+st.sidebar.markdown(
+    """
+    ### 🌐 Meus Contatos
+    <div class="sidebar-links">
+        <a href="https://github.com/jefferson-datascience" target="_blank">💻 GitHub</a>
+        <a href="https://www.linkedin.com/in/jeffersonhenriquecandido/" target="_blank">🔗 LinkedIn</a>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 
 if pagina == "Apresentação": 
@@ -199,6 +237,7 @@ elif pagina == "Monitoramento de Faturamento":
 
     # Construção do Dataset
     df1 = df1[(df1['StoreType'].isin(selection_store)) & (df1['Assortment'].isin(selection_assortment))].sort_values(by=['Date'], ascending=True)
+    df1_predicoes = df1_predicoes[(df1_predicoes['StoreType'].isin(selection_store)) & (df1_predicoes['Assortment'].isin(selection_assortment))]
 
     # 2.0 Modelagem de Dados 
     assortment = df1_loja['Assortment'].value_counts().reset_index().rename(columns={'count':'Qtd.'})
@@ -213,13 +252,19 @@ elif pagina == "Monitoramento de Faturamento":
     # Total de Clientes
     total_customers =  df1[df1['Date'] == df1['Date'].max()]['Customers'].sum()
 
+    # Previsão Total das Próximas 6 semanas
+    previsao_seis_semanas = np.round(df1_predicoes['PredictionSalesNextSexWeek'].sum(), 2)
+
     # Total de Lojas
     fat_medio_client = np.round(df1[df1['Date'] == df1['Date'].max()]['Sales'].sum()/df1[df1['Date'] == df1['Date'].max()]['Customers'].sum(), 2)
 
-    card1, card2, card3 = st.columns(3)
+    card1, card2 = st.columns(2)
     card1.metric(label='Faturamento Total Hoje',value=total_sales, border=True)
     card2.metric(label='Total de Cliente Hoje', value=total_customers, border=True)
+    
+    card3, card4 = st.columns(2)
     card3.metric(label='Faturamento Médio por Cliente', value=fat_medio_client, border=True)
+    card4.metric(label='Total Faturamento Próximos 6 dias', value=previsao_seis_semanas, border=True)
 
 
     # ======================= Acompanhamento de Faturamento =======================
@@ -405,3 +450,156 @@ elif pagina == "Monitoramento de Faturamento":
                     y='Customers',
                     use_container_width=True)   
         
+elif pagina == "Visão Gestores":
+
+    lista_lojas = df1['Store'].unique().tolist()
+    filter_store = st.multiselect("Filtre a loja que está sobre a sua gestão", lista_lojas, default=[1])
+
+    # Construção do Dataset
+    df_gestores = df1[df1['Store'].isin(filter_store)].sort_values(by=['Date'], ascending=True)
+    df_gestores_pred = np.round(df1_predicoes[df1_predicoes['Store'].isin(filter_store)], 2)
+
+    # ======================= Construção dos indicadores gerais de acompanhamento =======================
+    
+    # Total de Faturamento
+    total_sales = df_gestores[df_gestores['Date'] == df_gestores['Date'].max()]['Sales'].sum()
+
+    # Total de Clientes
+    total_customers =  df_gestores[df_gestores['Date'] == df_gestores['Date'].max()]['Customers'].sum()
+        # Previsão Total das Próximas 6 semanas
+    previsao_seis_semanas = np.round(df_gestores_pred['PredictionSalesNextSexWeek'].sum(), 2)
+
+    # Total de Lojas
+    fat_medio_client = np.round(df_gestores[df_gestores['Date'] == df_gestores['Date'].max()]['Sales'].sum()/df_gestores[df_gestores['Date'] == df_gestores['Date'].max()]['Customers'].sum(), 2)
+
+    card5, card6 = st.columns(2)
+    card5.metric(label='Faturamento Total Hoje',value=total_sales, border=True)
+    card6.metric(label='Total de Cliente Hoje', value=total_customers, border=True)
+
+    card7,card8 = st.columns(2)
+    card7.metric(label='Faturamento Médio por Cliente', value=fat_medio_client, border=True)
+    card8.metric(label='Previsão dos Próximos 6 dias de vendas', value=previsao_seis_semanas, border=True)
+
+    # ======================= Acompanhamento de Faturamento =======================
+
+    # Título da Seção 
+    st.title('**Faturamento das Lojas**')
+
+    # --------------------- GRÁFICO FATURAMENTO 30 DIAS ------------------
+
+    # Definição de Container para armazenar o gráfico
+    container_fat = st.container(border=True)
+
+    # Cabeçalho do gráfico
+    container_fat.markdown('**Faturamento - Últimos 30 Dias**')
+            
+    # Data Limite para obter os últimos 30 dias de faturamento
+    data_limite = df_gestores['Date'].max() - pd.Timedelta(days=30)
+
+    # Construção datasets para os gráficos
+    serie_historica_vendas_diario = df_gestores[['Date', 'Sales']][df1['Date'] >= data_limite].groupby('Date').sum().reset_index()
+            
+    # Gráfico
+    container_fat.line_chart(data=serie_historica_vendas_diario, x='Date', y='Sales',  use_container_width=True)
+
+    # ------------------------- GRÁFICO DE FATURAMENTO MENSAL E ANUAL ------------------------------------
+
+    # Containers para o faturamento mensal e anual
+    graf_gest1, graf_gest2 = st.columns(2)
+
+
+    # ------------------ Faturamento visão mensal ----------------------
+    with graf_gest1:
+
+        # Definição de Container
+        container_graf_gest1 = st.container(border=True)
+
+        # Cabeçalho do gráfico
+        container_graf_gest1.markdown('**Faturamento - Visão Mensal**')
+        
+        # Construção datasets para os gráficos
+        serie_historica_vendas_mensal = df_gestores[['Month', 'Sales']].groupby('Month').sum().reset_index()
+
+        # Gráfico
+        container_graf_gest1.line_chart(data=serie_historica_vendas_mensal, 
+                                   x='Month', 
+                                   y='Sales',  
+                                   use_container_width=True)
+
+
+    # --------------------- Faturamento Visão Anual ------------------------
+    with graf_gest2:
+
+        # Definição de Container 
+        container_graf_gest2 = st.container(border=True)
+
+        # Cabeçalho do gráfico
+        container_graf_gest2.markdown("**Faturamento - Visão Anual**")
+
+        # Construção datasets para os gráficos
+        serie_historia_vendas_anual = df_gestores[['Year', 'Sales']].groupby('Year').sum().reset_index()
+
+        # Gráfico
+        container_graf_gest2.bar_chart(data=serie_historia_vendas_anual,
+                    x='Year',
+                    y='Sales',
+                    use_container_width=True)   
+
+
+    # --------------------------- Acompanhamento das Movimentações de Clientes ---------------------------
+
+    # Título da Seção
+    st.title('**Movimentações de Clientes**')
+
+    container_mov_clientes = st.container(border=True)
+
+    # Cabeçalho do gráfico
+    container_mov_clientes.markdown('**Movimentações Clientes - Últimos 30 Dias**')
+
+    # Construção datasets para os gráficos
+    serie_historica_clientes_diario = df_gestores[['Date', 'Customers']][df_gestores['Date'] >= data_limite].groupby('Date').sum().reset_index()
+        
+    # Gráfico
+    container_mov_clientes.line_chart(data=serie_historica_clientes_diario, 
+                x='Date', 
+                y='Customers',  
+                use_container_width=True
+                )
+
+    # Definindo containers para acompanhamento de clientes -  visão Mensal e Anual
+    graf_gest6, graf_gest7 = st.columns(2)
+
+    # Container de Clientes
+    with graf_gest6:
+
+        container_graf_gest6 = st.container(border=True) 
+
+        # Cabeçalho do gráfico
+        container_graf_gest6.markdown('**Movimentação de Clientes - Visão Mensal**')
+        
+        # Construção datasets para os gráficos
+        serie_historica_clientes_mensal = df_gestores[['Month', 'Customers']].groupby('Month').sum().reset_index()
+        
+        # Gráfico
+        container_graf_gest6.line_chart(data=serie_historica_clientes_mensal, 
+                    x='Month', 
+                    y='Customers',  
+                    use_container_width=True
+                    )
+        
+    with graf_gest7:
+
+        # Definição do Container
+        container_graf_gest7 = st.container(border=True)
+
+        # Cabeçalho do gráfico
+        container_graf_gest7.markdown("**Movimentações de Clientes - Visão Anual**")
+
+        # Construção datasets para os gráficos
+        serie_historia_clientes_anual = df1[['Year', 'Customers']].groupby('Year').sum().reset_index()
+
+        # Gráfico
+        container_graf_gest7.bar_chart(data=serie_historia_clientes_anual,
+                    x='Year',
+                    y='Customers',
+                    use_container_width=True)   
