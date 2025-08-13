@@ -7,7 +7,7 @@ import plotly.express as px
 from datetime import datetime
 
 # 1.0 Carregamento dos Dados
-df1_loja = pd.read_parquet('DadosLoja.parquet', engine='fastparquet')
+df1_loja = pd.read_parquet('https://github.com/jefferson-datascience/Previsao-Vendas-Rossmann/blame/main/ScriptDashboard/DadosLoja.parquet', engine='pyarrow')
 df1_faturamento = pd.read_parquet('DadosTreino.parquet', engine='fastparquet')
 df1_predicoes = pd.read_parquet('BasePredita.parquet', engine='fastparquet')
 
