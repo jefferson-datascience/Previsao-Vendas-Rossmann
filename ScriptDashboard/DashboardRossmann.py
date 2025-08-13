@@ -7,9 +7,9 @@ import plotly.express as px
 from datetime import datetime
 
 # 1.0 Carregamento dos Dados
-df1_loja = pd.read_parquet('..\BaseDados\DadosLoja.parquet', engine='fastparquet')
-df1_faturamento = pd.read_parquet('..\BaseDados\DadosTreino.parquet', engine='fastparquet')
-df1_predicoes = pd.read_parquet('..\DadosPredicao\BasePredita.parquet', engine='fastparquet')
+df1_loja = pd.read_parquet('../BaseDados/DadosLoja.parquet', engine='fastparquet')
+df1_faturamento = pd.read_parquet('../BaseDados/DadosTreino.parquet', engine='fastparquet')
+df1_predicoes = pd.read_parquet('../DadosPredicao/BasePredita.parquet', engine='fastparquet')
 
 # Dados Finais
 df1 = df1_faturamento.merge(df1_loja, how='left', on='Store')
@@ -21,7 +21,7 @@ df1['Year'] = df1['Date'].dt.strftime('%Y')
 
 
 # Menu de Barra Lateral
-st.sidebar.image('..\Imagens\LogoRossmannSideBar.jpg')
+st.sidebar.image('../Imagens/LogoRossmannSideBar.jpg')
 st.sidebar.write("Navegue pelo Projeto")
 pagina = st.sidebar.selectbox("",["Apresentação", "Análise de Faturamento", "Monitoramento de Faturamento", "Visão Gestores"])
 
@@ -67,7 +67,7 @@ if pagina == "Apresentação":
 
     st.title("Bem-vindo ao Projeto de Análise de Faturamento da Rossmann")
 
-    st.image('..\Imagens\LogoRossmann.jpg')
+    st.image('../Imagens/LogoRossmann.jpg')
 
     st.write(
         "Este projeto tem como objetivo aprimorar minhas habilidades em análise estatística de regressão aplicada ao faturamento no varejo, "
@@ -161,7 +161,7 @@ elif pagina == "Análise de Faturamento":
     st.markdown("- **Customers**: Mais clientes resultam diretamente em maior faturamento.")
     st.image('../Imagens/DayOfWeekVSSales.png')
 
-    st.markdown("- **CompetitionDistance**: Há uma leve tendência de queda no faturamento conforme a distância do concorrente diminui. Lojas com concorrentes " \
+    st.markdown("- **CompetitionDistance**: Há uma leve tendência de queda no faturamento conforme a distância do concorrente diminui. Lojas com concorrentes " /
                 "próximos tendem a promover mais, aumentando as vendas.")
     st.image('../Imagens/CompetitonDistanceVSSales.png')
 
@@ -177,7 +177,7 @@ elif pagina == "Análise de Faturamento":
     st.markdown("- **StateHoliday**: O faturamento tende a ser menor em dias de feriado.")
     st.image('../Imagens/StateHolidayVSSales.png')
 
-    st.markdown("- **Assortment**: Lojas com sortimento intermediário performam melhor. Sortimentos básicos não atendem bem à demanda, e sortimentos excessivos" \
+    st.markdown("- **Assortment**: Lojas com sortimento intermediário performam melhor. Sortimentos básicos não atendem bem à demanda, e sortimentos excessivos" /
                 " incluem produtos de baixa rotatividade.")
     st.image('../Imagens/AssortmentVSSales.png')
 
@@ -205,12 +205,12 @@ elif pagina == "Análise de Faturamento":
 
     st.write("As variáveis que mais influenciam o faturamento das lojas Rossmann foram identificadas com base na análise de regressão. São elas:")
 
-    st.markdown("**Promo**: Aumento médio de US\$ 559.85 por dia (variação: US\$ 556.31 – US\$ 563.39).")
-    st.markdown("**Promo2**: Impacto positivo menor, com aumento médio de US\$ 126.21 por dia (variação: US\$ 122.81 – US\$ 129.61).")
-    st.markdown("**PublicHoliday**: Redução média de US\$ 23.67 (variação: US\$ 20.36 – US\$ 26.99).")
-    st.markdown("**DayOfWeek**: Redução média de US\$ 49.14 por dia ao longo da semana (variação: US\$ 45.68 – US\$ 52.60).")
-    st.markdown("**Customers**: Cada aumento no número de clientes resulta em incremento médio de US\$ 1,750.82 (variação: US\$ 1,747.19 – US\$ 1,754.33).")
-    st.markdown("**Assortment**: Maior variedade aumenta o faturamento em média US\$ 313.05 (variação: US\$ 309.73 – US\$ 316.37).")
+    st.markdown("**Promo**: Aumento médio de US/$ 559.85 por dia (variação: US/$ 556.31 – US/$ 563.39).")
+    st.markdown("**Promo2**: Impacto positivo menor, com aumento médio de US/$ 126.21 por dia (variação: US/$ 122.81 – US/$ 129.61).")
+    st.markdown("**PublicHoliday**: Redução média de US/$ 23.67 (variação: US/$ 20.36 – US/$ 26.99).")
+    st.markdown("**DayOfWeek**: Redução média de US/$ 49.14 por dia ao longo da semana (variação: US/$ 45.68 – US/$ 52.60).")
+    st.markdown("**Customers**: Cada aumento no número de clientes resulta em incremento médio de US/$ 1,750.82 (variação: US/$ 1,747.19 – US/$ 1,754.33).")
+    st.markdown("**Assortment**: Maior variedade aumenta o faturamento em média US/$ 313.05 (variação: US/$ 309.73 – US/$ 316.37).")
 
     st.header("Recomendações")
 
