@@ -4,7 +4,6 @@ import pandas as pd
 import numpy  as np
 import streamlit as st
 import plotly.express as px
-import seaborn as sbn
 from datetime import datetime
 
 # 1.0 Carregamento dos Dados
