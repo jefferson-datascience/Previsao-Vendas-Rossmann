@@ -7,9 +7,9 @@ import plotly.express as px
 from datetime import datetime
 
 # 1.0 Carregamento dos Dados
-df1_loja = pd.read_parquet('../BaseDados/DadosLoja.parquet', engine='fastparquet')
-df1_faturamento = pd.read_parquet('../BaseDados/DadosTreino.parquet', engine='fastparquet')
-df1_predicoes = pd.read_parquet('../DadosPredicao/BasePredita.parquet', engine='fastparquet')
+df1_loja = pd.read_parquet('DadosLoja.parquet', engine='fastparquet')
+df1_faturamento = pd.read_parquet('DadosTreino.parquet', engine='fastparquet')
+df1_predicoes = pd.read_parquet('BasePredita.parquet', engine='fastparquet')
 
 # Dados Finais
 df1 = df1_faturamento.merge(df1_loja, how='left', on='Store')
