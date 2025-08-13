@@ -176,8 +176,7 @@ elif pagina == "Análise de Faturamento":
     st.markdown("- **StateHoliday**: O faturamento tende a ser menor em dias de feriado.")
     st.image("https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/StateHolidayVSSales.png")
 
-    st.markdown("- **Assortment**: Lojas com sortimento intermediário performam melhor. Sortimentos básicos não atendem bem à demanda, e sortimentos excessivos" /
-                " incluem produtos de baixa rotatividade.")
+    st.markdown("- **Assortment**: Lojas com sortimento intermediário performam melhor. Sortimentos básicos não atendem bem à demanda, e sortimentos excessivos incluem produtos de baixa rotatividade.")
     st.image("https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/AssortmentVSSales.png")
 
     st.markdown("- **StoreType**: Lojas do tipo 'b' apresentam maior faturamento médio.")
