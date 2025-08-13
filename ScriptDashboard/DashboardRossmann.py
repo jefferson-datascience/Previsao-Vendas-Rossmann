@@ -203,7 +203,7 @@ elif pagina == "Análise de Faturamento":
 
     st.write("As variáveis que mais influenciam o faturamento das lojas Rossmann foram identificadas com base na análise de regressão. São elas:")
 
-    st.markdown("**Promo**: Aumento médio de US/\$ 559.85 por dia (variação: US/\$ 556.31 – US/\$ 563.39).",  unsafe_allow_html=True)
+    st.markdown("**Promo**: Aumento médio de US\{$} 559.85 por dia (variação: US\{$} 556.31 – US\{$} 563.39).",  unsafe_allow_html=True)
     st.markdown("**Promo2**: Impacto positivo menor, com aumento médio de US/$ 126.21 por dia (variação: US/$ 122.81 – US/$ 129.61).")
     st.markdown("**PublicHoliday**: Redução média de US/$ 23.67 (variação: US/$ 20.36 – US/$ 26.99).")
     st.markdown("**DayOfWeek**: Redução média de US/$ 49.14 por dia ao longo da semana (variação: US/$ 45.68 – US/$ 52.60).")
