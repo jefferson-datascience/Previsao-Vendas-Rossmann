@@ -8,8 +8,8 @@ from datetime import datetime
 
 # 1.0 Carregamento dos Dados
 df1_loja = pd.read_parquet("https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/ScriptDashboard/DadosLoja.parquet", engine='pyarrow')
-df1_faturamento = pd.read_parquet('DadosTreino.parquet', engine='fastparquet')
-df1_predicoes = pd.read_parquet('BasePredita.parquet', engine='fastparquet')
+df1_faturamento = pd.read_parquet("https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/ScriptDashboard/DadosTreino.parquet", engine='fastparquet')
+df1_predicoes = pd.read_parquet("https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/ScriptDashboard/BasePredita.parquet", engine='fastparquet')
 
 # Dados Finais
 df1 = df1_faturamento.merge(df1_loja, how='left', on='Store')
