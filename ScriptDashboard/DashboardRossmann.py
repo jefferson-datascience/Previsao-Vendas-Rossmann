@@ -8,8 +8,8 @@ import seaborn as sbn
 from datetime import datetime
 
 # 1.0 Carregamento dos Dados
-df1_loja = pd.read_csv('..\BaseDados\DadosLoja.csv', delimiter=',', low_memory=False)
-df1_faturamento = pd.read_csv('..\BaseDados\DadosTreino.csv', delimiter=',', low_memory=False)
+df1_loja = pd.read_parquet('..\BaseDados\DadosLoja.parquet', engine='fastparquet')
+df1_faturamento = pd.read_parquet('..\BaseDados\DadosTreino.parquet', engine='fastparquet')
 df1_predicoes = pd.read_parquet('..\DadosPredicao\BasePredita.parquet', engine='fastparquet')
 
 # Dados Finais
