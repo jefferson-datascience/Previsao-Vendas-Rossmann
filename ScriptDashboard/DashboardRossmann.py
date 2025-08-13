@@ -156,37 +156,37 @@ elif pagina == "Análise de Faturamento":
     )
 
     st.markdown("- **Day of Week**: Os primeiros dias da semana apresentam maior faturamento. Sextas, sábados e domingos têm queda nas vendas.")
-    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main//Imagens/DayOfWeekVSSales.png')
+    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/DayOfWeekVSSales.png')
 
     st.markdown("- **Customers**: Mais clientes resultam diretamente em maior faturamento.")
-    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main//Imagens/DayOfWeekVSSales.png')
+    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/Customers.png')
 
     st.markdown("- **CompetitionDistance**: Há uma leve tendência de queda no faturamento conforme a distância do concorrente diminui. Lojas com concorrentes " /
                 "próximos tendem a promover mais, aumentando as vendas.")
-    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main//Imagens/CompetitonDistanceVSSales.png')
+    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/CompetitonDistanceVSSales.png')
 
     st.markdown("- **Promo**: Promoções aumentam significativamente o volume de vendas.")
-    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main//Imagens/PromoVSSales.png')
+    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/PromoVSSales.png')
 
     st.markdown("- **SchoolHoliday**: Lojas próximas a escolas tendem a ter maior faturamento durante os feriados escolares, devido à maior movimentação de segunda a sábado.")
-    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main//Imagens/SchoolHolidayVSSales.png')
+    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/SchoolHolidayVSSales.png')
 
     st.markdown("- **Promo2**: Promoções contínuas perdem eficácia ao longo do tempo, pois os clientes não repetem a compra com tanta frequência.")
-    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main//Imagens/SchoolHolidayVSSales.png')
+    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/SchoolHolidayVSSales.png')
 
     st.markdown("- **StateHoliday**: O faturamento tende a ser menor em dias de feriado.")
-    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main//Imagens/StateHolidayVSSales.png')
+    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/StateHolidayVSSales.png')
 
     st.markdown("- **Assortment**: Lojas com sortimento intermediário performam melhor. Sortimentos básicos não atendem bem à demanda, e sortimentos excessivos" /
                 " incluem produtos de baixa rotatividade.")
-    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main//Imagens/AssortmentVSSales.png')
+    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/AssortmentVSSales.png')
 
     st.markdown("- **StoreType**: Lojas do tipo 'b' apresentam maior faturamento médio.")
-    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main//Imagens/StoreTypeVSSales.png')
+    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/StoreTypeVSSales.png')
 
     st.markdown("- **CompetitionOpenSinceYear/Month**: O tempo de abertura do concorrente mais próximo não apresentou impacto significativo nas vendas.")
-    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main//Imagens/CompetitionOpenSinceYearVSSales.png')
-    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main//Imagens/CompetitionOpenSinceMonthVSSales.png')
+    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/CompetitionOpenSinceYearVSSales.png')
+    st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/CompetitionOpenSinceMonthVSSales.png')
 
     st.header("Análise de Correlação")
 
