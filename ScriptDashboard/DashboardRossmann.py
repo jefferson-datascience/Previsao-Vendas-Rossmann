@@ -161,8 +161,7 @@ elif pagina == "Análise de Faturamento":
     st.markdown("- **Customers**: Mais clientes resultam diretamente em maior faturamento.")
     st.image("https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/CustomersVSSales.png")
 
-    st.markdown("- **CompetitionDistance**: Há uma leve tendência de queda no faturamento conforme a distância do concorrente diminui. Lojas com concorrentes " /
-                "próximos tendem a promover mais, aumentando as vendas.")
+    st.markdown("- **CompetitionDistance**: Há uma leve tendência de queda no faturamento conforme a distância do concorrente diminui. Lojas com concorrentes próximos tendem a promover mais, aumentando as vendas.")
     st.image("https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/CompetitonDistanceVSSales.png")
 
     st.markdown("- **Promo**: Promoções aumentam significativamente o volume de vendas.")
