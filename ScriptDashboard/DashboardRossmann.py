@@ -184,7 +184,7 @@ elif pagina == "Análise de Faturamento":
     st.markdown("- **StoreType**: Lojas do tipo 'b' apresentam maior faturamento médio.")
     st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/StoreTypeVSSales.png')
 
-    st.markdown("- **CompetitionOpenSinceYear/Month**: O tempo de abertura do concorrente mais próximo não apresentou impacto significativo nas vendas.")
+    st.markdown("- **CompetitionOpenSinceYear e CompetitionOpenSinceMonth**: O tempo de abertura do concorrente mais próximo não apresentou impacto significativo nas vendas.")
     st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/CompetitionOpenSinceYearVSSales.png')
     st.image('https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/CompetitionOpenSinceMonthVSSales.png')
 
