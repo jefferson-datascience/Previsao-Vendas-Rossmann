@@ -21,7 +21,7 @@ df1['Year'] = df1['Date'].dt.strftime('%Y')
 
 
 # Menu de Barra Lateral
-st.sidebar.image('../Imagens/LogoRossmannSideBar.jpg')
+st.sidebar.image("https://raw.githubusercontent.com/jefferson-datascience/Previsao-Vendas-Rossmann/main/Imagens/LogoRossmannSideBar.jpg")
 st.sidebar.write("Navegue pelo Projeto")
 pagina = st.sidebar.selectbox("",["Apresentação", "Análise de Faturamento", "Monitoramento de Faturamento", "Visão Gestores"])
 
