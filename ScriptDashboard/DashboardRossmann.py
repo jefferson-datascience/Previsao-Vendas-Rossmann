@@ -203,12 +203,12 @@ elif pagina == "Análise de Faturamento":
 
     st.write("As variáveis que mais influenciam o faturamento das lojas Rossmann foram identificadas com base na análise de regressão. São elas:")
 
-    st.text("**Promo**: Aumento médio de US$ 559.85 por dia (variação: US$ 556.31 – US$ 563.39).")
-    st.markdown("**Promo2**: Impacto positivo menor, com aumento médio de US/$ 126.21 por dia (variação: US/$ 122.81 – US/$ 129.61).")
-    st.markdown("**PublicHoliday**: Redução média de US/$ 23.67 (variação: US/$ 20.36 – US/$ 26.99).")
-    st.markdown("**DayOfWeek**: Redução média de US/$ 49.14 por dia ao longo da semana (variação: US/$ 45.68 – US/$ 52.60).")
-    st.markdown("**Customers**: Cada aumento no número de clientes resulta em incremento médio de US/$ 1,750.82 (variação: US/$ 1,747.19 – US/$ 1,754.33).")
-    st.markdown("**Assortment**: Maior variedade aumenta o faturamento em média US/$ 313.05 (variação: US/$ 309.73 – US/$ 316.37).")
+    st.text("Promo: Aumento médio de US$ 559.85 por dia (variação: US$ 556.31 – US$ 563.39).")
+    st.text("Promo2: Impacto positivo menor, com aumento médio de US$ 126.21 por dia (variação: US$ 122.81 – US$ 129.61).")
+    st.text("PublicHoliday: Redução média de US$ 23.67 (variação: US$ 20.36 – US$ 26.99).")
+    st.text("DayOfWeek: Redução média de US$ 49.14 por dia ao longo da semana (variação: US$ 45.68 – US$ 52.60).")
+    st.text("Customers: Cada aumento no número de clientes resulta em incremento médio de US$ 1,750.82 (variação: US$ 1,747.19 – US$ 1,754.33).")
+    st.text("Assortment: Maior variedade aumenta o faturamento em média US$ 313.05 (variação: US$ 309.73 – US$ 316.37).")
 
     st.header("Recomendações")
 
